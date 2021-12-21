@@ -1,11 +1,11 @@
 package com.leonardoguedex.pedidos.rest.controller;
 
 import com.leonardoguedex.pedidos.domain.entity.Categoria;
+import com.leonardoguedex.pedidos.service.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +14,13 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class CategoriaController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> listar(){
-        Categoria cat1 = new Categoria(1,"Informatica");
-        Categoria cat2 = new Categoria(2,"Escritorio");
+    @Autowired
+    private CategoriaService categoriaService;
 
-        List<Categoria> lista = new ArrayList<>();
-        lista.add(cat1);
-        lista.add(cat2);
-        return lista;
+    @RequestMapping(value = {"/id"}, method = RequestMethod.GET)
+    public ResponseEntity<?> listar(@PathVariable Integer id){
+
+        Categoria categoria = categoriaService.buscar(id);
+    return ResponseEntity.ok().body(categoria);
     }
 }
