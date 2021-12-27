@@ -1,13 +1,8 @@
 package com.leonardoguedex.pedidos;
 
-import com.leonardoguedex.pedidos.domain.entity.Categoria;
-import com.leonardoguedex.pedidos.domain.entity.Cidade;
-import com.leonardoguedex.pedidos.domain.entity.Estado;
-import com.leonardoguedex.pedidos.domain.entity.Produto;
-import com.leonardoguedex.pedidos.domain.repository.CategoriaRepository;
-import com.leonardoguedex.pedidos.domain.repository.CidadeRepository;
-import com.leonardoguedex.pedidos.domain.repository.EstadoRepository;
-import com.leonardoguedex.pedidos.domain.repository.ProdutoRepository;
+import com.leonardoguedex.pedidos.domain.entity.*;
+import com.leonardoguedex.pedidos.domain.enums.TipoCliente;
+import com.leonardoguedex.pedidos.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +24,12 @@ public class PedidosCursoApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private EstadoRepository estadoRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 
 	public static void main(String[] args) {
@@ -64,5 +65,16 @@ public class PedidosCursoApiApplication implements CommandLineRunner {
 		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
+
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("123456789", "987654321"));
+
+		Endereco e1 = new Endereco(null, "Rua das Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "106", "Sala 808", "Centro", "38777012", cli1, cid2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 	}
 }
