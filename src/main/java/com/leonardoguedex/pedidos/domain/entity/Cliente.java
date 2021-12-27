@@ -3,10 +3,7 @@ package com.leonardoguedex.pedidos.domain.entity;
 import com.leonardoguedex.pedidos.domain.enums.TipoCliente;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Cliente implements Serializable {
 
@@ -16,8 +13,8 @@ public class Cliente implements Serializable {
     private Integer id;
     private String nome;
     private String cpfCnpj;
-    private TipoCliente tipoCliente;
-    private List<Endereco> enderecos;
+    private Integer tipoCliente;
+    private List<Endereco> enderecos = new ArrayList<>();
     private Set<String> telefones = new HashSet<>();
 
     public Cliente() {
@@ -27,7 +24,7 @@ public class Cliente implements Serializable {
         this.id = id;
         this.nome = nome;
         this.cpfCnpj = cpfCnpj;
-        this.tipoCliente = tipoCliente;
+        this.tipoCliente = tipoCliente.getCod();
     }
 
     public Integer getId() {
@@ -55,11 +52,11 @@ public class Cliente implements Serializable {
     }
 
     public TipoCliente getTipoCliente() {
-        return tipoCliente;
+        return TipoCliente.toEnum(this.tipoCliente);
     }
 
     public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipoCliente = tipoCliente;
+        this.tipoCliente = tipoCliente.getCod();
     }
 
     public List<Endereco> getEnderecos() {

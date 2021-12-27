@@ -14,11 +14,12 @@ public class Endereco implements Serializable {
     private String bairro;
     private String cep;
     private Cliente cliente;
+    private Cidade cidade;
 
     public Endereco() {
     }
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep, Cliente cliente) {
+    public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep, Cliente cliente, Cidade cidade) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -26,6 +27,7 @@ public class Endereco implements Serializable {
         this.bairro = bairro;
         this.cep = cep;
         this.cliente = cliente;
+        this.cidade = cidade;
     }
 
     public Integer getId() {
@@ -43,6 +45,14 @@ public class Endereco implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
     public void setId(Integer id) {
