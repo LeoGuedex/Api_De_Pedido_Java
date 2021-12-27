@@ -13,7 +13,7 @@ public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
 
-    @RequestMapping(value = {"/id"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable Integer id){
 
         Categoria categoria = categoriaService.findById(id);
