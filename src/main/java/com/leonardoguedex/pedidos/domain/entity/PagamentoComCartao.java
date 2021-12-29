@@ -2,6 +2,9 @@ package com.leonardoguedex.pedidos.domain.entity;
 
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
 
+import javax.persistence.Entity;
+
+@Entity
 public class PagamentoComCartao extends Pagamento {
 
     private static final long serialVersionUID = 1L;
@@ -11,8 +14,8 @@ public class PagamentoComCartao extends Pagamento {
     public PagamentoComCartao() {
     }
 
-    public PagamentoComCartao(Integer id, Pedido pedido, EstadoPagamento estado, Integer numeroDeParcelas) {
-        super(id, pedido, estado);
+    public PagamentoComCartao(Integer id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
+        super(id, estado, pedido);
         this.numeroDeParcelas = numeroDeParcelas;
     }
 

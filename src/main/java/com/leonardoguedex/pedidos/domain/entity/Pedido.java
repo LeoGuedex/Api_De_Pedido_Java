@@ -16,21 +16,24 @@ public class Pedido implements Serializable {
 
     private Date instante;
 
+    @ManyToOne()
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
+    @ManyToOne()
+    @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
     public Pedido() {
     }
 
-    public Pedido(Integer id, Date instante, Cliente cliente, Pagamento pagamento, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
         this.id = id;
         this.instante = instante;
         this.cliente = cliente;
-        this.pagamento = pagamento;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
