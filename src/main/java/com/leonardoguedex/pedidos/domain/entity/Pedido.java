@@ -1,12 +1,11 @@
 package com.leonardoguedex.pedidos.domain.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,6 +18,7 @@ public class Pedido implements Serializable {
 
     private Cliente cliente;
 
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     private Endereco enderecoDeEntrega;

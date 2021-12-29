@@ -2,22 +2,29 @@ package com.leonardoguedex.pedidos.domain.entity;
 
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Pagamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToOne
+    @JoinColumn(name = "pedido_id")
+    @MapsId()
     private Pedido pedido;
+
     private EstadoPagamento estado;
+
+
+
+
+
 
     public Pagamento() {
     }
