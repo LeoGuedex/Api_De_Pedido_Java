@@ -28,6 +28,10 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "TELEFONE")
     private Set<String> telefones = new HashSet<>();
 
+    private List<Pedido> pedidos = new ArrayList<>();
+
+
+
     public Cliente() {
     }
 
@@ -37,6 +41,26 @@ public class Cliente implements Serializable {
         this.email = email;
         this.cpfCnpj = cpfCnpj;
         this.tipoCliente = tipoCliente.getCod();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTipoCliente(Integer tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public Integer getId() {
