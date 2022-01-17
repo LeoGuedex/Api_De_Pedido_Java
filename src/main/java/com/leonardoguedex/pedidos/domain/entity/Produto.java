@@ -1,5 +1,6 @@
 package com.leonardoguedex.pedidos.domain.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,7 +27,9 @@ public class Produto implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias = new ArrayList<>();
 
-    private List<ItemPedido> itens = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto() {
     }
@@ -69,10 +72,11 @@ public class Produto implements Serializable {
         this.categorias = categorias;
     }
 
-    public List<ItemPedido> getItens() {
+    public Set<ItemPedido> getItens() {
         return itens;
     }
 
+    @JsonIgnore
     public List<Pedido> getPedidos() {
         List<Pedido> lista = new ArrayList<>();
         for (ItemPedido x : itens) {
@@ -81,7 +85,7 @@ public class Produto implements Serializable {
         return lista;
     }
 
-    public void setItens(List<ItemPedido> itens) {
+    public void setItens(Set<ItemPedido> itens) {
         this.itens = itens;
     }
 
