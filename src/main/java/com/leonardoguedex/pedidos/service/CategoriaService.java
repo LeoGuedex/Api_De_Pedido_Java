@@ -30,8 +30,13 @@ public class CategoriaService {
     public Categoria update (Categoria categoria){
         find(categoria.getId()); // evitando de 2 usarem ao msm tempo
         return categoriaRepository.save(categoria);
-
     }
+
+    public void delete(Integer id){
+        find(id);
+        categoriaRepository.deleteById(id);
+    }
+
 
 
 }
