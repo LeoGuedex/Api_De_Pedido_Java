@@ -4,6 +4,7 @@ import com.leonardoguedex.pedidos.domain.entity.Categoria;
 import com.leonardoguedex.pedidos.domain.repository.CategoriaRepository;
 import com.leonardoguedex.pedidos.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,13 @@ public class CategoriaService {
         return categoria.orElseThrow(()-> new ObjectNotFoundException("Objeto Não Encontrado! Id: " + id + ", tipo: "
                 + Categoria.class.getName()));
     }
+
+    public Categoria Insert(Categoria categoria){
+        categoria.setId(null);
+        return categoriaRepository.save(categoria);
+    }
+
+
 
 
 }
