@@ -2,8 +2,10 @@ package com.leonardoguedex.pedidos.service;
 
 import com.leonardoguedex.pedidos.domain.entity.Categoria;
 import com.leonardoguedex.pedidos.domain.repository.CategoriaRepository;
+import com.leonardoguedex.pedidos.exception.DataIntegratyException;
 import com.leonardoguedex.pedidos.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,11 @@ public class CategoriaService {
 
     public void delete(Integer id){
         find(id);
-        categoriaRepository.deleteById(id);
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegratyException("Não é possivel excluir uma categoria que possui produtos");
+        }
     }
 
 
