@@ -1,7 +1,5 @@
 package com.leonardoguedex.pedidos.domain.entity;
-
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
-
 import javax.persistence.Entity;
 
 @Entity

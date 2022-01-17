@@ -1,7 +1,5 @@
 package com.leonardoguedex.pedidos.domain.entity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -20,7 +18,7 @@ public class Produto implements Serializable {
 
     private Double preco;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "produto_categoria",
             joinColumns = @JoinColumn(name = "produto_id"),

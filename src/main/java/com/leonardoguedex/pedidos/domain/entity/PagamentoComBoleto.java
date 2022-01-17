@@ -1,8 +1,6 @@
 package com.leonardoguedex.pedidos.domain.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
-
 import javax.persistence.Entity;
 import java.util.Date;
 

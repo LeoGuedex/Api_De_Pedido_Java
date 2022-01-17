@@ -1,6 +1,5 @@
 package com.leonardoguedex.pedidos.domain.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public abstract class Pagamento implements Serializable {
     private Integer estado;
 
     @MapsId()
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;

@@ -1,9 +1,5 @@
 package com.leonardoguedex.pedidos.domain.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,7 +19,6 @@ public class Pedido implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @JsonManagedReference // Determina que essa é a referencia
     @ManyToOne()
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
