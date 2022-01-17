@@ -1,6 +1,5 @@
 package com.leonardoguedex.pedidos.rest.controller;
 
-import com.leonardoguedex.pedidos.domain.entity.Categoria;
 import com.leonardoguedex.pedidos.domain.entity.Cliente;
 import com.leonardoguedex.pedidos.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> findById(@PathVariable Integer id) {
-        Cliente cliente = clienteService.findById(id);
+    public ResponseEntity<Cliente> find(@PathVariable Integer id) {
+        Cliente cliente = clienteService.find(id);
         return ResponseEntity.ok().body(cliente);
     }
 
