@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class CategoriaController {
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction;
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction
     ){
         Page<Categoria> list = categoriaService.findPage(page, linesPerPage, orderBy, direction);
         Page<CategoriaDto> listDto = list.map(categoria -> new CategoriaDto(categoria));
@@ -50,7 +51,8 @@ public class CategoriaController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDto categoriaDto){
+        Categoria categoria = categoriaService.fromDto(categoriaDto);
         Categoria categoriaSaved = categoriaService.Insert(categoria);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoriaSaved.getId()).toUri();
         return ResponseEntity.created(uri).build();

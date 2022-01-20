@@ -3,6 +3,7 @@ import com.leonardoguedex.pedidos.domain.entity.Categoria;
 import com.leonardoguedex.pedidos.domain.repository.CategoriaRepository;
 import com.leonardoguedex.pedidos.exception.DataIntegratyException;
 import com.leonardoguedex.pedidos.exception.ObjectNotFoundException;
+import com.leonardoguedex.pedidos.rest.dto.CategoriaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -54,7 +55,10 @@ public class CategoriaService {
         }
     }
 
+    public Categoria fromDto(CategoriaDto categoriaDto){
+        return new Categoria(categoriaDto.getId(), categoriaDto.getNome());
 
+    }
 
 
 }
