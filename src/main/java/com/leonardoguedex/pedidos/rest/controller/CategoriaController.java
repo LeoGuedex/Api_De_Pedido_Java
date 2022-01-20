@@ -60,11 +60,13 @@ public class CategoriaController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria categoria){
-    categoria.setId(id);
-    Categoria categoriaUpdated = categoriaService.update(categoria);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDto categoriaDto){
+        Categoria categoria = categoriaService.fromDto(categoriaDto);
+        categoria.setId(id);
+        Categoria categoriaUpdated = categoriaService.update(categoria);
     return ResponseEntity.noContent().build();
     }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id){
