@@ -63,7 +63,7 @@ public class CategoriaController {
     public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDto categoriaDto){
         Categoria categoria = categoriaService.fromDto(categoriaDto);
         categoria.setId(id);
-        Categoria categoriaUpdated = categoriaService.update(categoria);
+        categoria = categoriaService.update(categoria);
     return ResponseEntity.noContent().build();
     }
 
