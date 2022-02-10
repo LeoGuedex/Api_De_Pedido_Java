@@ -63,7 +63,7 @@ public class ClienteController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody ClienteNewDto clienteNewDto){
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDto clienteNewDto){
         Cliente cliente = clienteService.fromDto(clienteNewDto);
         clienteService.insert(cliente);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
