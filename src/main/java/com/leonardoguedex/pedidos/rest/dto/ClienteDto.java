@@ -1,13 +1,14 @@
 package com.leonardoguedex.pedidos.rest.dto;
 
 import com.leonardoguedex.pedidos.domain.entity.Cliente;
+import com.leonardoguedex.pedidos.service.validation.ClientUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-
+@ClientUpdate
 public class ClienteDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
