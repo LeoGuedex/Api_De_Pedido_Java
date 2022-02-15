@@ -1,5 +1,7 @@
 package com.leonardoguedex.pedidos.domain.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -41,6 +43,14 @@ public class Pedido implements Serializable {
         this.instante = instante;
         this.cliente = cliente;
         this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public double getValorTotal(){
+        double soma = 0.0;
+        for (ItemPedido ip : itens){
+            soma += ip.getSubTotal();
+        }
+        return soma;
     }
 
     public Set<ItemPedido> getItens() {
