@@ -1,6 +1,6 @@
 package com.leonardoguedex.pedidos.domain.entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,14 +21,14 @@ public class Pedido implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
@@ -45,20 +45,12 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    public double getValorTotal(){
+    public double getValorTotal() {
         double soma = 0.0;
-        for (ItemPedido ip : itens){
-            soma += ip.getSubTotal();
+        for (ItemPedido ip : itens) {
+            soma = soma + ip.getSubTotal();
         }
         return soma;
-    }
-
-    public Set<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(Set<ItemPedido> itens) {
-        this.itens = itens;
     }
 
     public Integer getId() {
@@ -101,18 +93,24 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pedido pedido = (Pedido) o;
-        return id.equals(pedido.id);
+        return getId().equals(pedido.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
-
-
 }

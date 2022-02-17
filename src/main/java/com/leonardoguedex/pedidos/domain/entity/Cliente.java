@@ -15,7 +15,7 @@ public class Cliente implements Serializable {
     private Integer id;
     private String nome;
 
-
+    @Column(unique = true)
     private String email;
 
     private String cpfCnpj;
@@ -32,8 +32,6 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
-
-
     public Cliente() {
     }
 
@@ -43,26 +41,6 @@ public class Cliente implements Serializable {
         this.email = email;
         this.cpfCnpj = cpfCnpj;
         this.tipo = (tipo == null) ? null : tipo.getCod();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setTipoCliente(Integer tipoCliente) {
-        this.tipo = tipoCliente;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
     }
 
     public Integer getId() {
@@ -81,6 +59,14 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getCpfCnpj() {
         return cpfCnpj;
     }
@@ -89,12 +75,12 @@ public class Cliente implements Serializable {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public TipoCliente getTipoCliente() {
+    public TipoCliente getTipo() {
         return TipoCliente.toEnum(this.tipo);
     }
 
-    public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipo = tipoCliente.getCod();
+    public void setTipo(TipoCliente tipo) {
+        this.tipo = tipo.getCod();
     }
 
     public List<Endereco> getEnderecos() {
@@ -113,16 +99,24 @@ public class Cliente implements Serializable {
         this.telefones = telefones;
     }
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return id.equals(cliente.id);
+        return getId().equals(cliente.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
 }

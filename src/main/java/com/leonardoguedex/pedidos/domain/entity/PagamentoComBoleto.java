@@ -1,10 +1,14 @@
 package com.leonardoguedex.pedidos.domain.entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
+
 import javax.persistence.Entity;
 import java.util.Date;
 
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento{
 
     private static final long serialVersionUID = 1L;
