@@ -1,4 +1,5 @@
 package com.leonardoguedex.pedidos.config;
+
 import com.leonardoguedex.pedidos.service.DBService;
 import com.leonardoguedex.pedidos.service.EmailService;
 import com.leonardoguedex.pedidos.service.SmtpEmailService;
@@ -7,8 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.thymeleaf.TemplateEngine;
 
-import javax.validation.constraints.Email;
 import java.text.ParseException;
 
 
@@ -23,8 +24,8 @@ public class DevConfig {
     private String strategy;
 
     @Bean
-    public boolean instantiateDatabase() throws ParseException{
-        if (!"create".equals(strategy)){
+    public boolean instantiateDatabase() throws ParseException {
+        if (!"create".equals(strategy)) {
             return false;
         }
         dbService.instantiateTestDatabase();
@@ -32,8 +33,13 @@ public class DevConfig {
     }
 
     @Bean
-    public EmailService emailService(){
+    public EmailService emailService() {
         return new SmtpEmailService();
+    }
+
+    @Bean
+    public TemplateEngine templateEngine() {
+        return new TemplateEngine();
     }
 
 }
