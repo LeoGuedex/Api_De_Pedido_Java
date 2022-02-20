@@ -2,6 +2,8 @@ package com.leonardoguedex.pedidos.config;
 
 
 import com.leonardoguedex.pedidos.service.DBService;
+import com.leonardoguedex.pedidos.service.EmailService;
+import com.leonardoguedex.pedidos.service.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +21,12 @@ public class TestConfig {
     @Bean
     public boolean instantiateDatabase() throws ParseException {
         dbService.instantiateTestDatabase();
+
         return true;
     }
 
+    @Bean
+    public EmailService emailService(){
+        return new MockEmailService();
+    }
 }
