@@ -6,6 +6,7 @@ import com.leonardoguedex.pedidos.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -49,6 +50,7 @@ public class CategoriaController {
         return ResponseEntity.ok().body(listDto);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDto categoriaDto){
         Categoria categoria = categoriaService.fromDto(categoriaDto);
@@ -57,7 +59,7 @@ public class CategoriaController {
         return ResponseEntity.created(uri).build();
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDto categoriaDto){
         Categoria categoria = categoriaService.fromDto(categoriaDto);
@@ -66,7 +68,7 @@ public class CategoriaController {
     return ResponseEntity.noContent().build();
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         categoriaService.delete(id);
