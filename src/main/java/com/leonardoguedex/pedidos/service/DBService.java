@@ -2,6 +2,7 @@ package com.leonardoguedex.pedidos.service;
 
 import com.leonardoguedex.pedidos.domain.entity.*;
 import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
+import com.leonardoguedex.pedidos.domain.enums.Perfil;
 import com.leonardoguedex.pedidos.domain.enums.TipoCliente;
 import com.leonardoguedex.pedidos.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,13 +113,21 @@ public class DBService {
 
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
+        Cliente cli2 = new Cliente(null, "Ana Costa", "emailTeste@gmail.com", "64423768003",
+                TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
+
+        cli2.getTelefones().addAll(Arrays.asList("27363344", "93838344"));
+        cli2.addPerfis(Perfil.ADMIN);
+
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, cid2);
 
+        Endereco e3 = new Endereco(null, "Avenida Floriano", "1206", null, "Centro", "38777012", cli2, cid2);
+
         cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 
-        clienteRepository.saveAll(Arrays.asList(cli1));
-        enderecoRepository.saveAll(Arrays.asList(e1, e2));
+        clienteRepository.saveAll(Arrays.asList(cli1,cli2));
+        enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

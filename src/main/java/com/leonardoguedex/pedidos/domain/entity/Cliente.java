@@ -1,9 +1,12 @@
 package com.leonardoguedex.pedidos.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.leonardoguedex.pedidos.domain.enums.Perfil;
 import com.leonardoguedex.pedidos.domain.enums.TipoCliente;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Entity
 public class Cliente implements Serializable {
@@ -31,11 +34,17 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "TELEFONE")
     private Set<String> telefones = new HashSet<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
+    private Set<Integer> perfis = new HashSet<>();
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
+        addPerfis(Perfil.CLIENTE);
     }
 
     public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipo, String senha) {
@@ -44,6 +53,7 @@ public class Cliente implements Serializable {
         this.email = email;
         this.cpfCnpj = cpfCnpj;
         this.senha = senha;
+        addPerfis(Perfil.CLIENTE);
         this.tipo = (tipo == null) ? null : tipo.getCod();
     }
 
@@ -101,6 +111,14 @@ public class Cliente implements Serializable {
 
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
+    }
+
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addPerfis(Perfil perfil) {
+        perfis.add(perfil.getCod());
     }
 
     public Set<String> getTelefones() {
