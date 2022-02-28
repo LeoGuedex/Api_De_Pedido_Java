@@ -2,6 +2,7 @@ package com.leonardoguedex.pedidos.config;
 
 
 import com.leonardoguedex.pedidos.security.JwtAutenticationFilter;
+import com.leonardoguedex.pedidos.security.JwtAuthorizationFilter;
 import com.leonardoguedex.pedidos.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConnfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {
       "/h2-console/**"
@@ -55,6 +56,7 @@ public class SecurityConnfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JwtAutenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
