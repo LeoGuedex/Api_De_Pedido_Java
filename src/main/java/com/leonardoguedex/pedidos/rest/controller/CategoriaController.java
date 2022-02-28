@@ -47,7 +47,6 @@ public class CategoriaController {
         Page<Categoria> list = categoriaService.findPage(page, linesPerPage, orderBy, direction);
         Page<CategoriaDto> listDto = list.map(categoria -> new CategoriaDto(categoria));
         return ResponseEntity.ok().body(listDto);
-
     }
 
     @RequestMapping(method = RequestMethod.POST)
