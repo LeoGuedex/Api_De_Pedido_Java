@@ -5,8 +5,8 @@ import com.leonardoguedex.pedidos.domain.enums.TipoCliente;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
 
 @Entity
 public class Cliente implements Serializable {

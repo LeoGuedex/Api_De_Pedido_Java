@@ -1,5 +1,6 @@
 package com.leonardoguedex.pedidos.rest.exception;
 
+import com.leonardoguedex.pedidos.exception.AuthorizationException;
 import com.leonardoguedex.pedidos.exception.DataIntegratyException;
 import com.leonardoguedex.pedidos.exception.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,12 @@ public class RestExceptionHandler {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
 
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> handlerAuthorizationException(AuthorizationException e, HttpServletRequest request) {
+        StandardError standardError = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(standardError);
     }
 
 

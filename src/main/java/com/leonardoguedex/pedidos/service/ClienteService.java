@@ -4,13 +4,17 @@ import com.leonardoguedex.pedidos.domain.entity.Categoria;
 import com.leonardoguedex.pedidos.domain.entity.Cidade;
 import com.leonardoguedex.pedidos.domain.entity.Cliente;
 import com.leonardoguedex.pedidos.domain.entity.Endereco;
+import com.leonardoguedex.pedidos.domain.enums.Perfil;
 import com.leonardoguedex.pedidos.domain.enums.TipoCliente;
 import com.leonardoguedex.pedidos.domain.repository.ClienteRepository;
 import com.leonardoguedex.pedidos.domain.repository.EnderecoRepository;
+import com.leonardoguedex.pedidos.exception.AuthorizationException;
 import com.leonardoguedex.pedidos.exception.DataIntegratyException;
 import com.leonardoguedex.pedidos.exception.ObjectNotFoundException;
 import com.leonardoguedex.pedidos.rest.dto.ClienteDto;
 import com.leonardoguedex.pedidos.rest.dto.ClienteNewDto;
+import com.leonardoguedex.pedidos.security.UserSS;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -36,7 +40,14 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+
+
     public Cliente find(Integer id) {
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+           throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> cliente = clienteRepository.findById(id);
         return cliente.orElseThrow(() -> new ObjectNotFoundException("Objeto Não Encontrado! Id: " + id + ", tipo: "
                 + Cliente.class.getName()));
