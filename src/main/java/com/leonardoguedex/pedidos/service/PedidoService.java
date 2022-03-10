@@ -1,5 +1,6 @@
 package com.leonardoguedex.pedidos.service;
 
+import com.leonardoguedex.pedidos.domain.entity.Cliente;
 import com.leonardoguedex.pedidos.domain.entity.ItemPedido;
 import com.leonardoguedex.pedidos.domain.entity.PagamentoComBoleto;
 import com.leonardoguedex.pedidos.domain.entity.Pedido;
@@ -7,8 +8,13 @@ import com.leonardoguedex.pedidos.domain.enums.EstadoPagamento;
 import com.leonardoguedex.pedidos.domain.repository.ItemPedidoRepository;
 import com.leonardoguedex.pedidos.domain.repository.PagamentoRepository;
 import com.leonardoguedex.pedidos.domain.repository.PedidoRepository;
+import com.leonardoguedex.pedidos.exception.AuthorizationException;
 import com.leonardoguedex.pedidos.exception.ObjectNotFoundException;
+import com.leonardoguedex.pedidos.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,6 +80,18 @@ public class PedidoService {
 //        emailService.sendOrderconfirmationHtmlEmail(pedido);
 
         return pedido;
+    }
+
+    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        UserSS user = UserService.authenticated();
+        if(user == null){
+            throw new AuthorizationException("Acesso Negado");
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        Cliente cliente = clienteService.find(user.getId());
+        return pedidoRepository.findByCliente(cliente, pageRequest);
     }
 
 }
