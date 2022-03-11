@@ -1,6 +1,7 @@
 package com.leonardoguedex.pedidos.service;
 
 
+import com.leonardoguedex.pedidos.domain.entity.Cliente;
 import com.leonardoguedex.pedidos.domain.entity.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,6 +73,19 @@ public abstract class AbstractEmailService implements EmailService {
             return templateEngine.process("email/confirmacaoPedido", context);
         }
 
+    public void sendNewPassword(Cliente cliente, String newPass){
+        SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPass);
+        sendEmail(sm);
+    }
 
+    protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass){
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(cliente.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitacao de Nova Senha");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova senha: " + newPass);
+        return sm;
+    }
 }
 

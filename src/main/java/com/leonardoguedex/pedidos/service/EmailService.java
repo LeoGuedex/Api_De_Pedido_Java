@@ -1,5 +1,6 @@
 package com.leonardoguedex.pedidos.service;
 
+import com.leonardoguedex.pedidos.domain.entity.Cliente;
 import com.leonardoguedex.pedidos.domain.entity.Pedido;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -14,5 +15,7 @@ public interface EmailService {
     void sendOrderconfirmationHtmlEmail(Pedido pedido);
 
     void sendHtmlEmail(MimeMessage mailMessage);
+
+    void sendNewPassword(Cliente cliente, String newPass);
 
 }
